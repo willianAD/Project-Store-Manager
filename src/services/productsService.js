@@ -8,7 +8,7 @@ const getAllProducts = async () => {
 const getProductsById = async (id) => {
   const productsId = await productsModel.findById(id);
 
-  if (!productsId.length) {
+  if (!productsId || !productsId.length) {
     return { message: 'Product not found' };
   }
   return productsId;
@@ -18,7 +18,7 @@ const createProduct = async (name) => {
   const insert = await productsModel.insert(name);
   const newProduct = await productsModel.findById(insert);
 
-  if (!newProduct.length) {
+  if (!newProduct || !newProduct.length) {
     return { message: 'Product not insert' };
   }
 
