@@ -15,10 +15,16 @@ const products = [
 
 const product1 =  { id: 1, name: "Martelo de Thor" };
 
-const newProduct = { id: 4, name: "ProdutoX" };
+const messageError = { message: 'Product not found' };
+
+const messageError2 = { message: 'Product not insert' };
+
+const newProduct = { name: "ProdutoX" };
 
 module.exports = {
   products,
   product1,
+  messageError,
+  messageError2,
   newProduct,
 };

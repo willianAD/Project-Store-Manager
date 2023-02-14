@@ -12,7 +12,7 @@ const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
 const connection = require('../../../src/models/conection');
 
-const { products, product1, newProduct } = require('./mocks/productsController.mock');
+const { products, product1, messageError, newProduct, messageError2 } = require('./mocks/productsController.mock');
 
 
 describe('Testes de unidade do controller dos produtos', function () {
@@ -40,7 +40,7 @@ describe('Testes de unidade do controller dos produtos', function () {
     res.json = sinon.stub().returns();
 
     sinon.stub(productsService, 'getProductsById')
-    .resolves(product1);
+    .resolves([product1]);
 
     await productsController.productsId(req, res);
 
@@ -48,12 +48,55 @@ describe('Testes de unidade do controller dos produtos', function () {
     expect(res.json).to.have.been.calledWith(product1);
   });
 
-  it('Cadastrando um produto', async function () {
+  it('Buscando um produto inválido a partir do seu id', async function () {
+    const res = {};
+    const req = { params: { id: 99 } };
 
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsService, 'getProductsById')
+    .resolves(messageError);
+
+    await productsController.productsId(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(messageError);
+  });
+
+  it('Cadastrando um produto', async function () {
+    const res = {};
+    const req = { body: { name: 'ProdutoX' } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsService, 'createProduct')
+    .resolves([newProduct]);
+
+    await productsController.insertProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(newProduct);
+  });
+
+  it('Cadastrando um produto inválido', async function () {
+    const res = {};
+    const req = { body: { name: 'AAA' } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsService, 'createProduct')
+    .resolves(messageError2);
+
+    await productsController.insertProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(messageError2);
   });
 
   afterEach(function () {
-    console.log('entrei');
     sinon.restore();
   });
 });

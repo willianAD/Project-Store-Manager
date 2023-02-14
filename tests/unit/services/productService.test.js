@@ -25,25 +25,24 @@ describe('Testes de unidade do services dos produtos', function () {
   });
 
   it('Buscando um produto a partir do seu id', async function () {
-    sinon.stub(productsModel, 'findById').resolves(products[0]);
+    sinon.stub(productsModel, 'findById').resolves([products[0]]);
 
     const result = await productsService.getProductsById(1);
 
-    expect(result).to.be.deep.equal(products[0]);
+    expect(result).to.be.deep.equal([products[0]]);
   });
 
   it('Cadastrando um produto invalido', async function () {
-    sinon.stub(productsModel, 'insert').resolves(1);
-    sinon.stub(productsModel, 'findById').resolves(products[0]);
+    sinon.stub(productsModel, 'insert').resolves(4);
 
-    const result = await productsService.createProduct('a');
+    const result = await productsService.createProduct('aaa');
 
     expect(result.message).to.be.deep.equal('Product not insert');
   });
 
   it('Cadastrando um produto', async function () {
     sinon.stub(productsModel, 'insert').resolves(1);
-    sinon.stub(productsModel, 'findById').resolves(products[0]);
+    sinon.stub(productsModel, 'findById').resolves([products[3]]);
     
     const result = await productsService.createProduct('ProdutoX');
 

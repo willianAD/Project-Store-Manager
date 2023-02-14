@@ -3,10 +3,10 @@ const { salesController } = require('../controllers');
 
 const router = express.Router();
 
-router.get('/', salesController.salesAll);
+router.get('/', salesController.getAllSales);
 
-router.get('/:id', salesController.salesId);
+router.get('/:id', salesController.getSalesById);
 
-router.post('/', salesController.inserSales);
+router.post('/', salesController.createSales);
 
 module.exports = router;

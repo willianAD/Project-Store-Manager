@@ -1,11 +1,11 @@
 const { salesModel } = require('../models');
 
-const getAllSales = async () => {
+const findAll = async () => {
   const sales = await salesModel.findAll();
   return sales;
 };
 
-const getSalesById = async (id) => {
+const findById = async (id) => {
   const salesId = await salesModel.findById(id);
 
   if (!salesId || !salesId.length) {
@@ -14,9 +14,9 @@ const getSalesById = async (id) => {
   return salesId;
 };
 
-const createSales = async (name) => {
-  const insert = await salesModel.insert(name);
-  const newSales = await salesModel.findById(insert);
+const insert = async (name) => {
+  const create = await salesModel.insert(name);
+  const newSales = await salesModel.findById(create);
 
   if (!newSales || !newSales.length) {
     return { message: 'Product not insert' };
@@ -26,7 +26,7 @@ const createSales = async (name) => {
 };
 
 module.exports = {
-  getAllSales,
-  getSalesById,
-  createSales,
+  findAll,
+  findById,
+  insert,
 };
