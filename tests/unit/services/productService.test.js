@@ -33,9 +33,10 @@ describe('Testes de unidade do services dos produtos', function () {
   });
 
   it('Cadastrando um produto invalido', async function () {
-    sinon.stub(productsModel, 'insert').resolves(4);
+    sinon.stub(productsModel, 'insert').resolves(1);
+    sinon.stub(productsModel, 'findById').resolves();
 
-    const result = await productsService.createProduct('aaa');
+    const result = await productsService.createProduct('AAA');
 
     expect(result.message).to.be.deep.equal('Product not insert');
   });
