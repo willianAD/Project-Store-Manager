@@ -28,8 +28,35 @@ const insertProducts = async (req, res) => {
   return res.status(201).json(products[0]);
 };
 
+const updateName = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  await productsService.update(id, name);
+  const newName = await productsService.getProductsById(id);
+  
+  if (newName.message) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  
+  return res.status(200).json(newName[0]);
+};
+
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+  const products = await productsService.remove(id);
+
+  if (products.message) {
+    return res.status(404).json(products);
+  }
+
+  return res.status(204).end();
+};
+
 module.exports = {
   productsAll,
   productsId,
   insertProducts,
+  updateName,
+  deleteById,
 };
