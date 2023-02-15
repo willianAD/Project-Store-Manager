@@ -18,14 +18,14 @@ const getSalesById = async (req, res) => {
 };
 
 const createSales = async (req, res) => {
-  const { name } = req.body;
-  const sales = await salesService.insert(name);
+  const sales = req.body;
+  const newSales = await salesService.insert(sales);
 
-  if (sales.message === 'Product not insert') {
-    return res.status(404).json(sales);
+  if (newSales.message) {
+    return res.status(404).json(newSales);
   }
 
-  return res.status(201).json(sales[0]);
+  return res.status(201).json(newSales);
 };
 
 module.exports = {
