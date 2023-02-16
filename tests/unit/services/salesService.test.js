@@ -33,40 +33,23 @@ describe('Testes de unidade do services das vendas', function () {
 
   it('Cadastrando uma venda', async function () {
     sinon.stub(productsModel, 'findById').resolves([{ saleId: 1 }]);
-    sinon.stub(salesModel, 'insertSales').resolves(newSales);
-    sinon.stub(salesModel, 'insert').resolves(newSaleSuccess);
+    sinon.stub(salesModel, 'insertSales').resolves(1);
+    sinon.stub(salesModel, 'insert').resolves(newSales);
     
-    const result = await salesService.insert([{ id: 3}], newSales);
+    const result = await salesService.insert(newSales);
 
     expect(result).to.be.deep.equal(newSaleSuccess);
   });
 
   it('Cadastrando uma venda invalida', async function () {
-    sinon.stub(productsModel, 'findById').resolves({ saleId: 5 });
-    sinon.stub(salesModel, 'insertSales').resolves(newSales);
-
+    sinon.stub(productsModel, 'findById').resolves({ saleId: 99 });
+    sinon.stub(salesModel, 'insertSales').resolves(99);
+    sinon.stub(salesModel, 'insert').resolves(newSales);
+    
     const result = await salesService.insert(newSales);
 
-    expect(result.message).to.be.deep.equal("Product not found");
+    expect(result.message).to.be.deep.equal('Product not found');
   });
-
-  // it('Cadastrando uma venda com quantidade invalida', async function () {
-  //   sinon.stub(productsModel, 'findById').resolves({ saleId: 1 });
-  //   sinon.stub(salesModel, 'insertSales').resolves(invalidQuantity);
-
-  //   const result = await salesService.insert(invalidQuantity);
-
-  //   expect(result.message).to.be.deep.equal("\"quantity\" must be greater than or equal to 1" );
-  // });
-
-  // it('Cadastrando uma venda com productId invalido', async function () {
-  //   sinon.stub(productsModel, 'findById').resolves({ saleId: 1 });
-  //   sinon.stub(salesModel, 'insertSales').resolves(invalidProduct);
-
-  //   const result = await salesService.insert(invalidProduct);
-
-  //   expect(result.message).to.be.deep.equal("\"productId\" is required");
-  // });
 
   afterEach(function () {
     sinon.restore();

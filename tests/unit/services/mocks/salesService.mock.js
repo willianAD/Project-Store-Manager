@@ -52,7 +52,7 @@ const invalidProduct = [
 ];
 
 const newSaleSuccess = {
-  "id": 3,
+  "id": 1,
   "itemsSold": [
     {
       "productId": 1,

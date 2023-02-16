@@ -21,10 +21,13 @@ const messageError2 = { message: 'Product not insert' };
 
 const newProduct = { name: "ProdutoX" };
 
+const newName = { name: 'Martelo do Batman'};
+
 module.exports = {
   products,
   product1,
   messageError,
   messageError2,
   newProduct,
+  newName,
 };

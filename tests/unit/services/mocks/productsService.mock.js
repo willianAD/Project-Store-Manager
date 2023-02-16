@@ -17,14 +17,9 @@ const products = [
   },
 ];
 
-const newProduct = {
-  name: "ProdutoX"
-};
-
 const message = { message: 'Product not found' };
 
 module.exports = {
   products,
-  newProduct,
   message,
 };

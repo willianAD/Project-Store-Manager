@@ -33,6 +33,7 @@ const update = async (id, name) => {
   }
   
   await productsModel.update(id, name);
+  
   return productsId;
 };
 

@@ -4,8 +4,7 @@ const sinon = require('sinon');
 const { productsModel } = require('../../../src/models');
 const { productsService } = require('../../../src/services');
 
-const connection = require('../../../src/models/conection');
-const { products, newProduct, message } = require('./mocks/productsService.mock');
+const { products, message } = require('./mocks/productsService.mock');
 
 describe('Testes de unidade do services dos produtos', function () {
   it('Buscando todos os produtos', async function () {
@@ -48,6 +47,42 @@ describe('Testes de unidade do services dos produtos', function () {
     const result = await productsService.createProduct('ProdutoX');
 
     expect(result).to.be.deep.equal([products[3]]);
+  });
+
+  it('Alterando um produto a partir do seu id', async function () {
+    sinon.stub(productsModel, 'findById').resolves([products[0]]);
+    sinon.stub(productsModel, 'update').resolves({ affectedRows: 1 });
+
+    const result = await productsService.update([products[0]]);
+
+    expect(result).to.be.deep.equal([products[0]]);
+  });
+
+  it('Alterando um produto com id inválido', async function () {
+    sinon.stub(productsModel, 'findById').resolves(13);
+    sinon.stub(productsModel, 'update').resolves({ affectedRows: 0 });
+
+    const result = await productsService.update([products[0]]);
+
+    expect(result).to.be.deep.equal(message);
+  });
+
+  it('Deleta um produto e não retorna nada', async function () {
+    sinon.stub(productsModel, 'findById').resolves([products[0]]);
+    sinon.stub(productsModel, 'remove').resolves(1);
+
+    const result = await productsService.remove(1);
+
+    expect(result).to.be.deep.equal([products[0]]);
+  });
+
+  it('Deleta um produto com id inexistente', async function () {
+    sinon.stub(productsModel, 'findById').resolves(99);
+    sinon.stub(productsModel, 'remove').resolves(1);
+
+    const result = await productsService.remove(1);
+
+    expect(result).to.be.deep.equal(message);
   });
 
   afterEach(function () {

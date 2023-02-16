@@ -15,9 +15,7 @@ const {
   newSales,
   saleId,
   message,
-  newSaleSuccess,
-  invalidQuantity,
-  invalidProduct,
+  invalid,
 } = require('./mocks/salesController.mock');
 
 
@@ -70,37 +68,35 @@ describe('Testes de unidade do controller das vendas', function () {
     expect(res.json).to.have.been.calledWith(message);
   });
 
-  // it('Cadastrando um produto', async function () {
-  //   const res = {};
-  //   const req = { body: { name: 'ProdutoX' } };
+  it('Cadastrando um produto', async function () {
+    const res = {};
+    const req = { body: newSales };
 
-  //   res.status = sinon.stub().returns(res);
-  //   res.json = sinon.stub().returns();
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
 
-  //   sinon.stub(productsService, 'createProduct')
-  //   .resolves([newProduct]);
+    sinon.stub(salesService, 'insert').resolves(newSales);
 
-  //   await productsController.insertProducts(req, res);
+    await salesController.createSales(req, res);
 
-  //   expect(res.status).to.have.been.calledWith(201);
-  //   expect(res.json).to.have.been.calledWith(newProduct);
-  // });
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(newSales);
+  });
 
-  // it('Cadastrando um produto inválido', async function () {
-  //   const res = {};
-  //   const req = { body: { name: 'AAA' } };
+  it('Cadastrando um produto com quantidade invalida', async function () {
+    const res = {};
+    const req = { body: invalid };
 
-  //   res.status = sinon.stub().returns(res);
-  //   res.json = sinon.stub().returns();
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
 
-  //   sinon.stub(productsService, 'createProduct')
-  //   .resolves(messageError2);
+    sinon.stub(salesService, 'insert').resolves(invalid);
 
-  //   await productsController.insertProducts(req, res);
+    await salesController.createSales(req, res);
 
-  //   expect(res.status).to.have.been.calledWith(404);
-  //   expect(res.json).to.have.been.calledWith(messageError2);
-  // });
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(invalid);
+  });
 
   afterEach(function () {
     sinon.restore();

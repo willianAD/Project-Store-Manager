@@ -22,12 +22,20 @@ describe('Testes de unidade do model das vendas', function () {
     expect(result).to.be.deep.equal(sales[1]);
   });
 
-  it('Cadastrando uma venda', async function () {
+  it('Cadastrando uma venda insertSales', async function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
 
-    const result = await salesModel.insertSales(newSales);
+    const result = await salesModel.insertSales();
 
     expect(result).to.equal(1);
+  });
+
+  it('Cadastrando uma venda insert', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+
+    const result = await salesModel.insert(newSales);
+
+    expect(result).to.be.deep.equal({ insertId: 1 });
   });
 
   afterEach(function () {

@@ -21,6 +21,8 @@ const createSales = async (req, res) => {
   const sales = req.body;
   const newSales = await salesService.insert(sales);
 
+  console.log(newSales);
+
   if (newSales.message) {
     return res.status(404).json(newSales);
   }
