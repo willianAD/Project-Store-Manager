@@ -30,27 +30,6 @@ const newSales = [
   }
 ];
 
-const invalidQuantity = [
-  {
-    "productId": 1,
-    "quantity": 0
-  },
-  {
-    "productId": 2,
-    "quantity": 5
-  }
-];
-
-const invalidProduct = [
-  {
-    "quantity": 0
-  },
-  {
-    "productId": 2,
-    "quantity": 5
-  }
-];
-
 const newSaleSuccess = {
   "id": 1,
   "itemsSold": [
@@ -86,6 +65,4 @@ module.exports = {
   saleId,
   message,
   newSaleSuccess,
-  invalidQuantity,
-  invalidProduct,
 };

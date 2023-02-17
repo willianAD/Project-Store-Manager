@@ -21,8 +21,6 @@ const createSales = async (req, res) => {
   const sales = req.body;
   const newSales = await salesService.insert(sales);
 
-  console.log(newSales);
-
   if (newSales.message) {
     return res.status(404).json(newSales);
   }
@@ -41,9 +39,23 @@ const deleteById = async (req, res) => {
   return res.status(204).end();
 };
 
+const updateSales = async (req, res) => {
+  const sales = req.body;
+  const { id } = req.params;
+
+  const newSales = await salesService.update(Number(id), sales);
+
+  if (newSales.message) {
+    return res.status(404).json(newSales);
+  }
+
+  return res.status(200).json(newSales);
+};
+
 module.exports = {
   getAllSales,
   getSalesById,
   createSales,
   deleteById,
+  updateSales,
 };

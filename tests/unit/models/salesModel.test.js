@@ -38,6 +38,15 @@ describe('Testes de unidade do model das vendas', function () {
     expect(result).to.be.deep.equal({ insertId: 1 });
   });
 
+
+  it('Deleta uma venda', async function () {
+    sinon.stub(connection, 'execute').resolves(undefined);
+
+    const result = await salesModel.remove(1);
+
+    expect(result).to.be.equal(undefined);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

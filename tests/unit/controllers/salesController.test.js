@@ -98,6 +98,36 @@ describe('Testes de unidade do controller das vendas', function () {
     expect(res.json).to.have.been.calledWith(invalid);
   });
 
+  it('Deleta uma venda com sucesso', async function () {
+    const res = {};
+    const req = { params: { id: 2 } };
+
+    res.status = sinon.stub().returns(res);
+    res.end = sinon.stub().returns();
+
+    sinon.stub(salesService, 'remove').resolves(1);
+
+    await salesController.deleteById(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.end).to.have.been.calledWith();
+  });
+
+  it('Deleta uma venda com id inválido', async function () {
+    const res = {};
+    const req = { params: { id: 13 }};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(salesService, 'remove').resolves(message);
+
+    await salesController.deleteById(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(message);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

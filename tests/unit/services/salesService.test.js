@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const { salesModel, productsModel } = require('../../../src/models');
 const { salesService } = require('../../../src/services');
 
-const { sales, saleId, message, newSales, newSaleSuccess, invalidQuantity, invalidProduct } = require('./mocks/salesService.mock');
+const { sales, saleId, message, newSales, newSaleSuccess } = require('./mocks/salesService.mock');
 
 describe('Testes de unidade do services das vendas', function () {
   it('Buscando todas as vendas', async function () {
@@ -49,6 +49,24 @@ describe('Testes de unidade do services das vendas', function () {
     const result = await salesService.insert(newSales);
 
     expect(result.message).to.be.deep.equal('Product not found');
+  });
+
+  it('Deleta uma venda com sucesso', async function () {
+    sinon.stub(salesModel, 'findById').resolves(saleId);
+    sinon.stub(salesModel, 'remove').resolves(1);
+
+    const result = await salesService.remove(1);
+
+    expect(result).to.be.deep.equal(saleId);
+  });
+
+  it('Deleta uma venda com id inválido', async function () {
+    sinon.stub(salesModel, 'findById').resolves(99);
+    sinon.stub(salesModel, 'remove').resolves(99);
+
+    const result = await salesService.remove(99);
+
+    expect(result).to.be.deep.equal(message);
   });
 
   afterEach(function () {
