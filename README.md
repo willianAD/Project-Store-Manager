@@ -16,7 +16,7 @@ Aderência ao padrão REST.
 
 ## Requisitos
 
-<img src="">
+<img src="https://raw.githubusercontent.com/willianAD/Project-Store-Manager/main/image/Projeto%20Store%20Manager.png">
 
 # Requisitos Obrigatórios
 
@@ -255,7 +255,6 @@ Aderência ao padrão REST.
     <br>
   </details>
 
-> 💬 Em caso de dúvidas, lembre-se de consultar a seção [Dicas](#dicas) e [Diagrama ER, Entidades e Scripts](#diagrama-scripts)
 
 ---
 
@@ -488,7 +487,6 @@ Aderência ao padrão REST.
     <br>
   </details>
 
-> 💬 Em caso de dúvidas, lembre-se de consultar a seção [Diagrama ER, Entidades e Scripts](#diagrama-scripts)
 
 ---
 
